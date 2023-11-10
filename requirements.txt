@@ -10,5 +10,5 @@ tensorflow
 keras-tuner
 xgboost
 joblib
-scikit-learn
+scikit-learn==1.2.2
 datetime
