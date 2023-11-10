@@ -122,5 +122,5 @@ elif project == 'RICE CLASSIFICATION USING SUPPORT VECTOR MACHINE':
         ]):
             # Preprocess and predict
             data = preprocess_rice_data(area, major_axis_length, minor_axis_length, eccentricity, extent)
-            prediction = best_svm_model.predict(data)
+            prediction = best_rf_model.predict(data)
             st.success(f'Rice Class Prediction: {"Jasmine" if prediction[0] == 1 else "Gonen"}')
