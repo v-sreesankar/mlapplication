@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 # Load the models, scaler, and encoders
 best_xgb_model = load('xgb_model.joblib')
-best_svm_model = load('svm_model.joblib')
+best_rf_model = load('rf_model.joblib')
 scaler = load('scaler.joblib')
 # Load label encoders
 airline_encoder = load('Airline_encoder.joblib')
@@ -42,8 +42,10 @@ def preprocess_airfare_data(airline, source, destination, total_stops, additiona
     journey_datetime = datetime.strptime(date_of_journey, '%Y-%m-%d')
     journey_day = journey_datetime.day
     journey_month = journey_datetime.month
-    dep_hour, dep_minute = dep_time.hour, dep_time.minute
-    arrival_hour, arrival_minute = arrival_time.hour, arrival_time.minute
+    dep_time_obj = datetime.strptime(dep_time, '%H:%M')
+    arrival_time_obj = datetime.strptime(arrival_time, '%H:%M')
+    dep_hour, dep_minute = dep_time_obj.hour, dep_time_obj.minute
+    arrival_hour, arrival_minute = arrival_time_obj.hour, arrival_time_obj.minute
     
     # Initialize duration in minutes
     duration_in_minutes = 0
@@ -110,15 +112,15 @@ elif project == 'RICE CLASSIFICATION USING SUPPORT VECTOR MACHINE':
     eccentricity = st.number_input('Eccentricity (Valid Range: 0.6 - 1)', min_value=0.6, max_value=1.0, value=0.6, help="Enter a value between 0.6 and 1")
     extent = st.number_input('Extent (Valid Range: 0.3 - 1)', min_value=0.3, max_value=1.0, value=0.3, help="Enter a value between 0.3 and 1")
 
-if st.button('Classify Rice'):
-    if all([
+    if st.button('Classify Rice'):
+        if all([
         check_input('Area', area, 2500, 11000),
         check_input('Major Axis Length', major_axis_length, 70, 190),
         check_input('Minor Axis Length', minor_axis_length, 30, 90),
         check_input('Eccentricity', eccentricity, 0.6, 1),
         check_input('Extent', extent, 0.3, 1)
-    ]):
-        # Preprocess and predict
-        data = preprocess_rice_data(area, major_axis_length, minor_axis_length, eccentricity, extent)
-        prediction = best_svm_model.predict(data)
-        st.success(f'Rice Class Prediction: {"Jasmine" if prediction[0] == 1 else "Gonen"}')
+        ]):
+            # Preprocess and predict
+            data = preprocess_rice_data(area, major_axis_length, minor_axis_length, eccentricity, extent)
+            prediction = best_svm_model.predict(data)
+            st.success(f'Rice Class Prediction: {"Jasmine" if prediction[0] == 1 else "Gonen"}')
