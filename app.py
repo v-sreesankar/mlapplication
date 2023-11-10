@@ -82,7 +82,7 @@ def preprocess_rice_data(area, major_axis_length, minor_axis_length, eccentricit
 
 # Streamlit UI
 st.sidebar.title('Choose a ML Application:')
-project = st.sidebar.radio("", ('AIRFARE PRICE PREDICTION USING XGB REGRESSOR', 'RICE CLASSIFICATION USING SUPPORT VECTOR MACHINE'))
+project = st.sidebar.radio("", ('AIRFARE PRICE PREDICTION USING XGB REGRESSOR', 'RICE CLASSIFICATION USING RANDOM FOREST CLASSIFIER'))
 
 if project == 'AIRFARE PRICE PREDICTION USING XGB REGRESSOR':
     st.title('Airfare Price Prediction using XGB Regressor')
@@ -104,8 +104,8 @@ if project == 'AIRFARE PRICE PREDICTION USING XGB REGRESSOR':
         prediction = best_xgb_model.predict(data)
         st.success(f'Predicted Airfare: ₹{prediction[0]:.2f}')
 
-elif project == 'RICE CLASSIFICATION USING SUPPORT VECTOR MACHINE':
-    st.title('Rice Classification using Support Vector Machine')
+elif project == 'RICE CLASSIFICATION USING RANDOM FOREST CLASSIFIER':
+    st.title('Rice Classification using Random Forest Classifier')
     area = st.number_input('Area (Valid Range: 2500 - 11000)', min_value=2500, max_value=11000, value=2500, help="Enter a value between 2500 and 11000")
     major_axis_length = st.number_input('Major Axis Length (Valid Range: 70 - 190)', min_value=70, max_value=190, value=70, help="Enter a value between 70 and 190")
     minor_axis_length = st.number_input('Minor Axis Length (Valid Range: 30 - 90)', min_value=30, max_value=90, value=30, help="Enter a value between 30 and 90")
